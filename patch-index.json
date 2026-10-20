@@ -1,4 +1,10 @@
 {
   "schema": 1,
-  "releases": []
+  "releases": [
+    {
+      "version": "test-001",
+      "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/test-001.zip",
+      "sha256": "1710168714ec02ea1f66ed5bd57803f0c04fbe9b64d7ce6cf3c389fadd3c0d57"
+    }
+  ]
 }

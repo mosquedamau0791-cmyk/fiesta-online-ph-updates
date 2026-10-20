@@ -10,6 +10,11 @@
       "version": "speed-balance-20261021",
       "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/fiesta-speed-balance-20261021.zip",
       "sha256": "068d821902266dfae4acdc6020ece63a46c9c181f54de1dcb681dc598e6af819"
+    },
+    {
+      "version": "autopatch-check-20261021-02",
+      "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/autopatch-check-20261021-02.zip",
+      "sha256": "f77ec2f0938308cdbb518f7b2b811372bf8e2a1b0b1f39726bcbb66e39df7200"
     }
   ]
 }

@@ -15,6 +15,11 @@
       "version": "autopatch-check-20261021-02",
       "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/autopatch-check-20261021-02.zip",
       "sha256": "f77ec2f0938308cdbb518f7b2b811372bf8e2a1b0b1f39726bcbb66e39df7200"
+    },
+    {
+      "version": "autopatch-v7-live-20261021",
+      "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/autopatch-v7-live-20261021.zip",
+      "sha256": "360491310905ed60fa62dd15f174d957d545de632120bedd76ce79af925372cb"
     }
   ]
 }

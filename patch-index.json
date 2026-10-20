@@ -20,6 +20,11 @@
       "version": "autopatch-v7-live-20261021",
       "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/autopatch-v7-live-20261021.zip",
       "sha256": "360491310905ed60fa62dd15f174d957d545de632120bedd76ce79af925372cb"
+    },
+    {
+      "version": "stress-100mb-20261021",
+      "url": "https://github.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/releases/download/stress-100mb-20261021/fiesta-stress-100mb.zip",
+      "sha256": "a27e5b6e05f3ff40267bf136fb6285df3d5f23bba2239c7fb93e67f6ba557349"
     }
   ]
 }

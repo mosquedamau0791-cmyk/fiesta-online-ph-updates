@@ -1,0 +1,84 @@
+name: Publish 100 MiB network patch test
+on:
+  push:
+    paths:
+      - '.github/workflows/publish-100mb-stress.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      TAG: stress-100mb-20261021
+      VERSION: stress-100mb-20261021
+      ASSET: fiesta-stress-100mb.zip
+      REPO: ${{ github.repository }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate, verify and publish 100 MiB test download
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json, os, zipfile
+          index=json.load(open("patch-index.json",encoding="utf-8"))
+          version=os.environ["VERSION"]
+          if any(r["version"]==version for r in index["releases"]):
+              print("Release is already in the live index; refusing duplicate publication.")
+              raise SystemExit(1)
+          note=("Fiesta Online PH 100 MiB network transfer verification.\n"
+                "No game assets are changed by this update.\n"
+                "Download resume, SHA-256, and install confirmation test.\n")
+          name="FiestaOnlinePH_100MB_Network_Test_OK.txt"
+          payload=note.encode("utf-8")
+          manifest={"schema":1,"version":version,"files":{name:hashlib.sha256(payload).hexdigest()}}
+          # ZIPs may have a self-extracting prefix. This 100 MiB non-compressible
+          # prefix exercises network transfer and Range resume, but does not
+          # install a 100 MiB dummy file into players' game directories.
+          with open(os.environ["ASSET"],"wb") as f:
+              for _ in range(25):
+                  f.write(os.urandom(4*1024*1024))
+          with zipfile.ZipFile(os.environ["ASSET"],"a",compression=zipfile.ZIP_DEFLATED) as z:
+              z.writestr("manifest.json",json.dumps(manifest,sort_keys=True))
+              z.writestr("payload/"+name,payload)
+          with zipfile.ZipFile(os.environ["ASSET"],"r") as z:
+              assert set(z.namelist())=={"manifest.json","payload/"+name}
+              assert z.read("payload/"+name)==payload
+              assert json.loads(z.read("manifest.json"))==manifest
+          with open(os.environ["ASSET"],"rb") as f:
+              digest=hashlib.file_digest(f,"sha256").hexdigest()
+          with open("stress-test-sha256.txt","w") as f: f.write(digest+"\n")
+          print("Verified ZIP bytes:",os.path.getsize(os.environ["ASSET"]))
+          print("ZIP SHA-256:",digest)
+          PY
+          gh release create "$TAG" "$ASSET" --repo "$REPO" \
+            --title "Fiesta Online PH 100 MiB Network Test" \
+            --notes "Network-only 100 MiB auto-resume stress test. Installs a small confirmation text file; does not modify game assets." \
+            --latest=false
+          # Only expose the patch to clients AFTER the asset is uploaded.
+          python3 - <<'PY'
+          import json,os
+          path="patch-index.json"
+          with open(path,encoding="utf-8") as f: index=json.load(f)
+          version=os.environ["VERSION"]
+          if any(r["version"]==version for r in index["releases"]): raise SystemExit("Version already published")
+          sha=open("stress-test-sha256.txt").read().strip()
+          index["releases"].append({
+            "version":version,
+            "url":"https://github.com/"+os.environ["REPO"]+"/releases/download/"+os.environ["TAG"]+"/"+os.environ["ASSET"],
+            "sha256":sha
+          })
+          with open(path,"w",encoding="utf-8") as f:
+            json.dump(index,f,indent=2)
+            f.write("\n")
+          PY
+          git config user.name "fiesta-ph-release-bot"
+          git config user.email "fiesta-ph-release-bot@users.noreply.github.com"
+          git add patch-index.json
+          git commit -m "Publish verified 100 MiB network resume test"
+          git push origin HEAD:main

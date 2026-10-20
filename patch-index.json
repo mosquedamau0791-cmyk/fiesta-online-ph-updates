@@ -5,6 +5,11 @@
       "version": "test-001",
       "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/test-001.zip",
       "sha256": "1710168714ec02ea1f66ed5bd57803f0c04fbe9b64d7ce6cf3c389fadd3c0d57"
+    },
+    {
+      "version": "speed-balance-20261021",
+      "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/fiesta-speed-balance-20261021.zip",
+      "sha256": "068d821902266dfae4acdc6020ece63a46c9c181f54de1dcb681dc598e6af819"
     }
   ]
 }

@@ -1,4 +1,10 @@
 {
   "schema": 1,
-  "releases": []
+  "releases": [
+    {
+      "version": "game-account-links-20261030-v1",
+      "url": "https://raw.githubusercontent.com/mosquedamau0791-cmyk/fiesta-online-ph-updates/main/test-patches/game-account-links-20261030-v1.zip",
+      "sha256": "81e3dd69b1251c5d78159d253cf71787db31fe983debe414cce2c483a6af67cb"
+    }
+  ]
 }
